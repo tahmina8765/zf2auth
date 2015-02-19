@@ -1,0 +1,86 @@
+<?php
+$title = 'Bind Resources with roles';
+$this->headTitle($title);
+/*
+  ?>
+  <h1>All Node</h1>
+  <?php
+  if (!empty($allNode)) {
+  foreach ($allNode as $data) {
+  ?>
+  <a href="<?php echo $this->url($data); ?>"><?php echo $this->translate($data); ?></a><br>
+  <?php
+  }
+  }
+ *
+ */
+?>
+<div class="occ-container">
+    <div class="row">
+        <div class="panel">
+            <div class="panel-heading">New added resource(s)</div>
+            <div class="panel-body">
+                <ul class="resourceul">
+                    <?php
+                    if (!empty($newly_added)) {
+                        foreach ($newly_added as $data) {
+                            ?>
+                            <li><a href="<?php echo $this->url($data); ?>"><?php echo $this->translate($data); ?></a></li>
+                            <?php
+                        }
+                    }
+                    ?>
+                </ul>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-heading">Delete deleted resource(s)</div>
+            <div class="panel-body">
+                <ul class="resourceul">
+                    <?php
+                    if (!empty($delete_from_exist)) {
+                        foreach ($delete_from_exist as $data) {
+                            ?>
+                            <li><a href="<?php //echo $this->url($data);              ?>"><?php echo $this->translate($data); ?></a></li>
+                            <?php
+                        }
+                    }
+                    ?>
+                </ul>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-heading">Existing resources</div>
+            <div class="panel-body">
+                <ul class="resourceul">
+                    <?php
+                    if (!empty($resources)) {
+                        foreach ($resources as $data) {
+                            ?>
+                            <li><a href="<?php //echo $this->url($data);              ?>"><?php echo $this->translate($data->name); ?></a></li>
+                            <?php
+                        }
+                    }
+                    ?>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .resourceul{
+        margin: 0;
+        padding: 0;
+    }
+    .resourceul li{
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        float: left;
+        display: block;
+        min-width: 25%;
+    }
+</style>

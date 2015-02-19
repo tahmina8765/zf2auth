@@ -1,0 +1,24 @@
+<?php
+if (!empty($getIdentity)) {
+    $nameString = $userData->username;
+    $nameString = (strlen($nameString) > 14) ? substr($nameString, 0, 11) . '...' : $nameString;
+    ?>
+    <div class="pull-right">
+        <?php
+        echo "Welcome, " . $nameString;
+        ?>
+        | <a href="<?php echo $this->basePath('/users/logout'); ?>">Logout</a>
+    </div>
+    <?php
+} else {
+    ?>
+    <div id="<?php echo $result_div_id; ?>">
+        <?php
+        echo $this->partial('zf2auth/users/login_form.phtml');
+        ?>
+    </div>
+    <?php
+}
+?>
+<!-- Button trigger modal -->
+

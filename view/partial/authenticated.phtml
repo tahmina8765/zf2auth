@@ -1,0 +1,79 @@
+<?php
+if (!empty($getIdentity)) {
+    $nameString = $userData->first_name . ' ' . $userData->last_name;
+    $nameString = (strlen($nameString) > 15) ? substr($nameString, 0, 12) . '...' : $nameString;
+    /*
+      ?>
+
+      <ul class="nav navbar-nav navbar-right">
+      <li class="dropdown">
+      <a data-toggle="dropdown" class="dropdown-toggle" href="#">Hello, <?php echo $nameString; ?>! <span class="caret"></span></a>
+      <ul role="menu" class="dropdown-menu">
+      <li><a href="<?php echo $this->url('home'); ?>">My Account</a></li>
+      <li><a href="<?php echo $this->url('users/change-password'); ?>">Change password</a></li>
+      <li class="divider"></li>
+      <li><a href="<?php echo $this->url('users/logout'); ?>">Logout</a></li>
+      </ul>
+      </li>
+      </ul>
+      <?php
+     *
+     */
+    ?>
+    <!--search & user info start-->
+    <ul class="nav pull-right top-menu">
+        <!--        <li>
+                    <input type="text" class="form-control search" placeholder=" Search">
+                </li>-->
+        <!-- user login dropdown start-->
+        <?php echo $this->partial('partial/company_widget.phtml'); ?>
+        <li class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                <img src="http://www.gravatar.com/avatar/<?php echo md5(strtolower(trim($userData->email))); ?>?s=40&d=mm" alt="User Image" />
+                <span class="username"><?php echo $nameString; ?></span>
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu extended logout">
+                <li><a href="<?php echo $this->url('home'); ?>"><i class=" fa fa-suitcase"></i> My Account</a></li>
+                <li><a href="<?php echo $this->url('users/change-password'); ?>"><i class="fa fa-cog"></i> Change password</a></li>
+                <li><a href="<?php echo $this->url('users/logout'); ?>"><i class="fa fa-key"></i> Logout</a></li>
+            </ul>
+        </li>
+        <!-- user login dropdown end -->
+
+        <!--        <li>
+                    <div class="toggle-right-box">
+                        <div class="fa fa-bars"></div>
+                    </div>
+                </li>-->
+    </ul>
+    <!--search & user info end-->
+    <?php
+    /*
+      ?>
+      <div class="pull-right white">
+      <?php
+      echo "Welcome, " . $nameString;
+      ?>
+      | <a href="<?php echo $this->basePath('/users/logout'); ?>">Logout</a>
+      </div>
+      <?php
+     */
+} else {
+    /*
+      ?>
+      <div class='header-form'>
+      <div class="pull-right">
+      <div class="btn-group dropup mrg-top-10">
+      <a type="button" class="btn btn-default" id="loginbtn" href="<?php echo $this->url('users/login'); ?>"><span class="glyphicon glyphicon-user"></span></a>
+      <a type="button" class="btn btn-default" id="loginbtn" href="<?php echo $this->url('users/login'); ?>">User Log In</a>
+      </div>
+      </div>
+      </div>
+      <?php
+     *
+     */
+}
+?>
+<!-- Button trigger modal -->
+

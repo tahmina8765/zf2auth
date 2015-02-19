@@ -1,0 +1,116 @@
+<?php
+$title = 'Bind Resources with roles';
+$this->headTitle($title);
+$url_order = 'ASC';
+if ($order_by == 'name') {
+    $url_order = ($order == 'ASC' ) ? 'DESC' : 'ASC';
+} elseif ($order_by == 'title') {
+    $url_order = ($order == 'ASC' ) ? 'DESC' : 'ASC';
+}
+
+
+$urlarray['name'] = array('order_by' => 'name', 'order' => $url_order);
+$urlarray['title'] = array('order_by' => 'title', 'order' => $url_order);
+
+
+$displayRange_array = array(
+    'order_by' => $order_by,
+    'order' => $order,
+);
+
+$fullspan = count($roles) + 2;
+/*
+  ?>
+  <h1>All Node</h1>
+  <?php
+  if (!empty($allNode)) {
+  foreach ($allNode as $data) {
+  ?>
+  <a href="<?php echo $this->url($data); ?>"><?php echo $this->translate($data); ?></a><br>
+  <?php
+  }
+  }
+ *
+ */
+?>
+<div class="occ-container">
+    <div class="row">
+        <?php echo $this->partial('partial/message.phtml', array('flashMessages' => $this->flashMessages, 'error' => $this->error)); ?>
+        <div class="col-md-24">
+            <div class="panel-group m-bot20" id="accordion">
+                <?php
+                $controllerHide = array('application', 'menus', 'emailers', 'roles', 'resources', 'role_resources', 'user_roles', 'zf2auth');
+                $group = array('index', 'search', 'registration');
+                $module_name = array();
+                $countTable = 0;
+                if (!empty($resources)) {
+                    foreach ($resources as $data) {
+                        $resource_id = $data->id;
+                        $resource_name = explode('/', $data->name);
+
+                        // Escape full controlers
+                        if (!empty($resource_name[0]) && in_array($resource_name[0], $controllerHide)) {
+                            continue;
+                        }
+                        // Escape index and search page
+                        if (!empty($resource_name[1]) && in_array($resource_name[1], $group)) {
+                            continue;
+                        }
+
+                        // Escape primary resources
+                        if (in_array($resource_id, $primaryResources)) {
+                            continue;
+                        }
+                        if (!in_array($resource_name[0], $module_name)) {
+                            if (!empty($module_name)) {
+                                echo $this->partial('partial/resource_table.phtml', array('roles' => $roles, 'section' => 'tail'));
+                            }
+                            $countTable++;
+                            $module_name[] = $resource_name[0];
+                            echo $this->partial('partial/resource_table.phtml', array('id' => $countTable, 'name' => $data->name, 'roles' => $roles, 'section' => 'head'));
+                        }
+                        ?>
+                        <tr>
+        <!--                            <td><?php //echo $this->translate(empty($data->title) ? '' : $data->title);   ?></td>-->
+                            <td><?php echo $this->translate($data->name); ?></td>
+                            <?php
+                            foreach ($roles as $role) {
+                                ?>
+                                <td>
+                                    <?php
+                                    if ($role->id == ADMIN_ROLE_ID) {
+                                        ?>
+                                        <input class="donot-create-switch" type="checkbox" checked="checked" disabled="true">
+                                        <?php
+                                    } else if (in_array($resource_id, $roleResources[$role->id])) {
+                                        ?>
+                                        <input class="save-role-resources donot-create-switch" data-role="<?php echo $role->id; ?>" data-resource="<?php echo $resource_id; ?>" data-token="<?php echo md5((int) $resource_id * (int) ($role->id)); ?>" type="checkbox" checked="true">
+                                        <?php
+                                    } else {
+                                        ?>
+                                        <input class="save-role-resources donot-create-switch" data-role="<?php echo $role->id; ?>" data-resource="<?php echo $resource_id; ?>" data-token="<?php echo md5((int) $resource_id * (int) ($role->id)); ?>" type="checkbox">
+                                        <?php
+                                    }
+                                    ?>
+                                </td>
+                                <?php
+                            }
+                            ?>
+                        </tr>
+                        <?php
+                    }
+
+                    echo $this->partial('partial/resource_table.phtml', array('id' => '', 'roles' => $roles, 'section' => 'tail'));
+                }
+                ?>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .bootstrap-switch.bootstrap-switch-mini {
+        min-width: 50px;
+    }
+</style>

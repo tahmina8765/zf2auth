@@ -1,0 +1,149 @@
+<?php
+$title = 'Please sign in';
+?>
+
+<?php
+$form = $this->form;
+$form->setAttribute('action', $this->url('users/authenticate'));
+$form->setAttribute('class', 'form-signin');
+$form->prepare();
+echo $this->form()->openTag($form);
+$allname = array();
+foreach ($form as $element) :
+    $name = $element->getAttribute('id');
+    $allname[] = $name;
+    $$name = $element;
+endforeach;
+?>
+
+<h2 class="form-signin-heading"><?php echo $this->escapeHtml($title); ?></h2>
+<div class="login-wrap">
+    <div class="user-login-info">
+        <?php echo $this->partial('zf2auth/elements/message.phtml', array('flashMessages' => $this->flashMessages, 'error' => $this->error)); ?>
+        <?php
+// CSRF
+        if ($this->formElementErrors($csrf)) {
+            $class = '';
+            $class = $csrf->getAttribute('class');
+            $class = $class . ' ErrorField';
+            $csrf->setAttribute('class', $class);
+        }
+        ?>
+        <div class=" <?php if ($this->formElementErrors($csrf)) echo "error"; ?>">
+            <?php
+            echo $this->formElement($csrf);
+            if ($this->formElementErrors($csrf)):
+                ?>
+                <span class="help-inline"><?php echo $this->formElementErrors($csrf); ?></span>
+                <?php
+            endif;
+            ?>
+        </div>
+
+
+        <?php
+// Email
+        if ($this->formElementErrors($email)) {
+            $class = '';
+            $class = $email->getAttribute('class');
+            $class = $class . ' ErrorField';
+            $email->setAttribute('class', $class);
+        }
+        ?>
+        <div class=" <?php if ($this->formElementErrors($email)) echo "error"; ?>">
+            <?php
+            echo $this->formElement($email);
+            if ($this->formElementErrors($email)):
+                ?>
+                <span class="help-inline"><?php echo $this->formElementErrors($email); ?></span>
+                <?php
+            endif;
+            ?>
+        </div>
+
+        <?php
+// Password
+        if ($this->formElementErrors($password)) {
+            $class = '';
+            $class = $email->getAttribute('class');
+            $class = $class . ' ErrorField';
+            $password->setAttribute('class', $class);
+        }
+        ?>
+        <div class=" <?php if ($this->formElementErrors($password)) echo "error"; ?>">
+            <?php
+            echo $this->formElement($password);
+            if ($this->formElementErrors($password)):
+                ?>
+                <span class="help-inline"><?php echo $this->formElementErrors($password); ?></span>
+                <?php
+            endif;
+            ?>
+        </div>
+
+    </div>
+
+    <label class="checkbox">
+<!--        <input type="checkbox" value="rememberme"> Remember me-->
+        <span class="pull-left">
+            <a href="<?php echo $this->url('users/forgot-password') ?>">Forgot your password?</a>
+        </span>
+    </label>
+    <?php
+// Remember me
+    /*
+      if ($this->formElementErrors($rememberme)) {
+      $class = '';
+      $class = $email->getAttribute('class');
+      $class = $class . ' ErrorField';
+      $rememberme->setAttribute('class', $class);
+      }
+      ?>
+      <div class="pad-bottom-10 <?php if ($this->formElementErrors($rememberme)) echo "error"; ?>">
+      <?php
+      echo $this->formElement($rememberme);
+      echo $rememberme->getLabel();
+      if ($this->formElementErrors($rememberme)):
+      ?>
+      <span class="help-inline"><?php echo $this->formElementErrors($rememberme); ?></span>
+      <?php
+      endif;
+      ?>
+      </div>
+
+
+      <?php
+     * 
+     */
+    echo $this->formElement($submit);
+    ?>
+
+
+    <?php
+    /*
+      foreach ($form as $element) :
+      ?>
+      <div class=" <?php if ($this->formElementErrors($element)) echo "error"; ?>">
+      <!--                <label class="control-label" style="text-align: left;"><?php // echo $element->getLabel();      ?></label>-->
+      <div style="text-align: left;">
+      <?php
+      echo $this->formElement($element);
+      if ($this->formElementErrors($element)):
+      ?>
+      <span class="help-inline"><?php echo $this->formElementErrors($element); ?></span>
+      <?php
+      endif;
+      ?>
+      </div>
+      </div>
+      <?php
+      endforeach;
+     *
+     */
+    echo $this->form()->closeTag();
+    ?>
+
+</div>
+<div class="bottom-link">
+    <a href="<?php echo $this->url('home') ?>">Back to home</a>
+</div>

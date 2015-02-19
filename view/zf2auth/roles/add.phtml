@@ -1,0 +1,62 @@
+<div class="panel">
+    <div class="panel-body">
+        <?php
+        $title = 'Add new Roles';
+        $this->headTitle($title);
+        ?>
+        <script type="text/javascript">
+            /* <![CDATA[ */
+            jQuery(function () {
+                jQuery("#first_name").validate({
+                    expression: "if (VAL) return true; else return false;",
+                    message: "Value is required and can't be empty"
+                });
+            });
+            /* ]]> */
+        </script>
+        <div class="occ-container">
+            <div class="row">
+                <h1><?php echo $this->escapeHtml($title); ?></h1>
+                <?php echo $this->partial('zf2auth/elements/message.phtml', array('flashMessages' => $this->flashMessages, 'error' => $this->error)); ?>
+                <?php
+                $form = $this->form;
+                $form->setAttribute('action', $this->url('roles/add'));
+                $form->prepare();
+
+                echo $this->form()->openTag($form);
+                ?>
+                <table class="formtable">
+                    <?php
+                    foreach ($form as $element) :
+                        ?>
+                        <tr>
+                            <td><?php echo $element->getLabel(); ?></td>
+                            <td><?php
+                                if ($this->formElementErrors($element)) {
+                                    $element->setAttribute('class', 'required form-control ErrorField');
+                                }
+                                echo $this->formElement($element);
+                                if ($this->formElementErrors($element)):
+                                    ?>
+                                    <span class="ValidationErrors"><?php echo $this->formElementErrors($element); ?></span>
+                                    <?php
+                                endif;
+                                ?>
+                            </td>
+                        </tr>
+                        <?php
+                    endforeach;
+                    ?>
+                    <tr>
+                        <td></td>
+                        <td><button class="btn btn-success" type="submit">Submit</button>
+                            <button class="btn reset" type="reset" onclick="history.back();">Cancel</button></td>
+                    </tr>
+                </table>
+                <?php
+                echo $this->form()->closeTag();
+                ?>
+            </div>
+        </div>
+    </div>
+</div>

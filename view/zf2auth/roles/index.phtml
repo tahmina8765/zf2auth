@@ -1,0 +1,165 @@
+<?php
+$title = 'Roles';
+$this->headTitle($title);
+$url_order = 'ASC';
+if ($order_by == 'name') {
+    $url_order = ($order == 'ASC' ) ? 'DESC' : 'ASC';
+} elseif ($order_by == 'label') {
+    $url_order = ($order == 'ASC' ) ? 'DESC' : 'ASC';
+}
+
+
+$urlarray['name'] = array('order_by' => 'name', 'order' => $url_order);
+$urlarray['label'] = array('order_by' => 'label', 'order' => $url_order);
+
+
+$displayRange_array = array(
+    'page' => $page,
+    'order_by' => $order_by,
+    'order' => $order,
+);
+
+if (!empty($search_by)) {
+    foreach ($urlarray as $key => $val) {
+        $urlarray[$key]['search_by'] = $search_by;
+    }
+    $displayRange_array['search_by'] = $search_by;
+}
+foreach ($urlarray as $key => $val) {
+    $urlarray[$key]['item_per_page'] = $item_per_page;
+    $urlarray[$key]['page'] = $page;
+}
+?>
+<div class="occ-container">
+    <div class="row">
+        <?php echo $this->partial('zf2auth/elements/message.phtml', array('flashMessages' => $this->flashMessages, 'error' => $this->error)); ?>
+        <!--        FILTER ROLE-->
+        <div class="col-md-24">
+            <div class="panel-group" id="accordion">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"> Filter Roles</a></h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="col-md-6">
+                                <?php
+                                $form = $this->form;
+                                $form->setAttribute('action', $this->url('roles/search'));
+                                $form->prepare();
+                                echo $this->form()->openTag($form);
+                                ?>
+                                <input type="hidden"
+                                       name="item_per_page" value="<?php echo $item_per_page; ?>">
+                                       <?php
+                                       foreach ($form as $element) :
+                                           ?>
+                                    <div
+                                        class="form-group <?php if ($this->formElementErrors($element)) echo "error" ?>">
+                                        <label class="col-lg-8 control-label"><?php echo $element->getLabel() ?></label>
+                                        <div class="col-lg-16 controls">
+                                            <?php
+                                            echo $this->formElement($element);
+                                            if ($this->formElementErrors($element)) :
+                                                ?>
+                                                <span
+                                                    class="help-inline"><?php echo $this->formElementErrors($element); ?></span>
+
+                                                <?php
+                                            endif;
+                                            ?>
+                                        </div>
+                                    </div>
+                                    <?php
+                                endforeach
+                                ;
+                                echo $this->form()->closeTag();
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--        LIST ROLE-->
+        <div class="col-md-24">
+            <div class="panel">
+                <div class="panel-heading">
+                    <?php echo $this->escapeHtml($title); ?>
+                    <span class="dropdown pull-right tools">
+                        <?php
+                        if ($this->UtilHelper()->displayLink('roles/add')) {
+                            ?>
+                            <a class="btn btn-primary" href="<?php echo $this->url('roles/add'); ?>"><i class="fa fa-plus-circle"></i> Add new roles</a>
+                            <?php
+                        }
+                        ?>
+                        <?php echo $this->partial('partial/page_range.phtml'); ?>
+                    </span>
+                </div>
+                <div class="panel-body">
+
+
+
+
+                    <div id="searchresults">
+                        <table class="table table-hover general-table">
+                            <colgroup></colgroup>
+                            <colgroup></colgroup>
+                            <colgroup style="width: 80px;"></colgroup>
+                            <thead>
+                                <tr>
+
+                                    <th><a href="<?php echo $this->url($pageAction, $urlarray['label']); ?>">Label <?php if ($order_by == 'label'): ?><?php echo $url_order == 'ASC' ? '&#8595;' : '&#8593;' ?><?php endif; ?></a></th>
+                                    <th><a href="<?php echo $this->url($pageAction, $urlarray['name']); ?>">Name <?php if ($order_by == 'name'): ?><?php echo $url_order == 'ASC' ? '&#8595;' : '&#8593;' ?><?php endif; ?></a></th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($paginator as $row) : ?>
+                                    <tr>
+                                        <td><?php echo $this->escapeHtml($row->label); ?></td>
+                                        <td><?php echo $this->escapeHtml($row->name); ?></td>
+                                        <td>
+                                            <a href="<?php echo $this->url('roles/edit', array('id' => $row->id)); ?>" class="btn btn-primary btn-xs edit-row"><i class="glyphicon glyphicon-pencil"></i></a>
+                                            <?php
+                                            $delurl = $this->url('roles/delete', array(
+                                                'id' => $row->id,
+                                            ));
+                                            ?>
+                                            <div style="display: none;">
+                                                <form action="<?php echo $delurl; ?>" method="post" id="post_<?php echo $row->id; ?>" name="post_<?php echo $row->id; ?>">
+                                                    <input type="hidden" name="id" value="<?php echo (int) $row->id; ?>" />
+                                                </form>
+                                            </div>
+                                            <a onclick="if (confirm('Are you sure you want to delete <?php echo $row->id; ?>?')) {
+                                                            document.<?php echo "post_" . $row->id; ?>.submit();
+                                                        }
+                                                        event.returnValue = false;
+                                                        return false;" href="#" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
+
+                                        </td>
+
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <?php echo $this->partial('partial/table_total_count.phtml', array('totalRecord' => $totalRecord, 'currentPage' => $currentPage, 'totalPage' => $totalPage)); ?>
+                            </div>
+                            <div class="col-md-12">
+                                <?php
+                                echo $this->paginationControl(
+                                        $paginator, 'Sliding', 'paginator-slide', array('order_by' => $order_by, 'order' => $order, 'search_by' => $search_by, 'pageAction' => $pageAction, 'item_per_page' => $item_per_page)
+                                );
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

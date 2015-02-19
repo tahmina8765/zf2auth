@@ -1,0 +1,15 @@
+<?php
+if (!empty($getIdentity)) {
+    echo "You are Already registered";
+    ?>
+    <a href="<?php echo $this->basePath('/users/logout'); ?>">Logout</a>
+    <?php
+} else {
+    ?>
+    <div id="registrationresults">
+        <?php
+        echo $this->partial('zf2auth/users/registration_form.phtml');
+        ?>
+    </div>
+    <?php
+}

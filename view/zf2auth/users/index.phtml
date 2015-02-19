@@ -1,0 +1,180 @@
+<?php
+$title = 'Users';
+$this->headTitle($title);
+$url_order = 'ASC';
+if ($order_by == 'username') {
+    $url_order = ($order == 'ASC' ) ? 'DESC' : 'ASC';
+} elseif ($order_by == 'email') {
+    $url_order = ($order == 'ASC' ) ? 'DESC' : 'ASC';
+} elseif ($order_by == 'password') {
+    $url_order = ($order == 'ASC' ) ? 'DESC' : 'ASC';
+} elseif ($order_by == 'salt') {
+    $url_order = ($order == 'ASC' ) ? 'DESC' : 'ASC';
+} elseif ($order_by == 'email_check_code') {
+    $url_order = ($order == 'ASC' ) ? 'DESC' : 'ASC';
+} elseif ($order_by == 'is_disabled') {
+    $url_order = ($order == 'ASC' ) ? 'DESC' : 'ASC';
+} elseif ($order_by == 'created') {
+    $url_order = ($order == 'ASC' ) ? 'DESC' : 'ASC';
+} elseif ($order_by == 'modified') {
+    $url_order = ($order == 'ASC' ) ? 'DESC' : 'ASC';
+}
+
+
+$urlarray['username'] = array('order_by' => 'username', 'order' => $url_order);
+$urlarray['email'] = array('order_by' => 'email', 'order' => $url_order);
+$urlarray['password'] = array('order_by' => 'password', 'order' => $url_order);
+$urlarray['salt'] = array('order_by' => 'salt', 'order' => $url_order);
+$urlarray['email_check_code'] = array('order_by' => 'email_check_code', 'order' => $url_order);
+$urlarray['is_disabled'] = array('order_by' => 'is_disabled', 'order' => $url_order);
+$urlarray['created'] = array('order_by' => 'created', 'order' => $url_order);
+$urlarray['modified'] = array('order_by' => 'modified', 'order' => $url_order);
+
+
+$displayRange_array = array(
+    'page' => $page,
+    'order_by' => $order_by,
+    'order' => $order,
+);
+
+if (!empty($search_by)) {
+    foreach ($urlarray as $key => $val) {
+        $urlarray[$key]['search_by'] = $search_by;
+    }
+    $displayRange_array['search_by'] = $search_by;
+}
+foreach ($urlarray as $key => $val) {
+    $urlarray[$key]['item_per_page'] = $item_per_page;
+    $urlarray[$key]['page'] = $page;
+}
+?>
+<div class="occ-container">
+    <div class="row">
+        <div class="col-md-24">
+            <div class="panel">
+                <div class="panel-body">
+                    <div class="dropdown pull-right" style="margin-top: 20px;">
+                        <a class="btn btn-default" href="<?php echo $this->url('users/add'); ?>">Add new users</a>
+                        <?php echo $this->partial('partial/page_range.phtml'); ?>
+                    </div>
+                    <h1><?php echo $this->escapeHtml($title); ?></h1>
+
+
+                    <?php echo $this->partial('zf2auth/elements/message.phtml', array('flashMessages' => $this->flashMessages, 'error' => $this->error)); ?>
+
+                    <div id="searchresults">
+                        <table class="table table-hover general-table">
+                            <thead>
+                                <tr>
+                                    <th><a href="<?php echo $this->url($pageAction, $urlarray['username']); ?>">Username <?php if ($order_by == 'username'): ?><?php echo $url_order == 'ASC' ? '&#8595;' : '&#8593;' ?><?php endif; ?></a></th>
+                                    <th><a href="<?php echo $this->url($pageAction, $urlarray['email']); ?>">Email <?php if ($order_by == 'email'): ?><?php echo $url_order == 'ASC' ? '&#8595;' : '&#8593;' ?><?php endif; ?></a></th>
+                                    <th><a href="<?php echo $this->url($pageAction, $urlarray['password']); ?>">Password <?php if ($order_by == 'password'): ?><?php echo $url_order == 'ASC' ? '&#8595;' : '&#8593;' ?><?php endif; ?></a></th>
+                                    <th><a href="<?php echo $this->url($pageAction, $urlarray['salt']); ?>">Salt <?php if ($order_by == 'salt'): ?><?php echo $url_order == 'ASC' ? '&#8595;' : '&#8593;' ?><?php endif; ?></a></th>
+                                    <th><a href="<?php echo $this->url($pageAction, $urlarray['email_check_code']); ?>">Email Check Code <?php if ($order_by == 'email_check_code'): ?><?php echo $url_order == 'ASC' ? '&#8595;' : '&#8593;' ?><?php endif; ?></a></th>
+                                    <th><a href="<?php echo $this->url($pageAction, $urlarray['is_disabled']); ?>">Is Disabled <?php if ($order_by == 'is_disabled'): ?><?php echo $url_order == 'ASC' ? '&#8595;' : '&#8593;' ?><?php endif; ?></a></th>
+                                    <th><a href="<?php echo $this->url($pageAction, $urlarray['created']); ?>">Created <?php if ($order_by == 'created'): ?><?php echo $url_order == 'ASC' ? '&#8595;' : '&#8593;' ?><?php endif; ?></a></th>
+                                    <th><a href="<?php echo $this->url($pageAction, $urlarray['modified']); ?>">Modified <?php if ($order_by == 'modified'): ?><?php echo $url_order == 'ASC' ? '&#8595;' : '&#8593;' ?><?php endif; ?></a></th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($paginator as $row) : ?>
+                                    <tr>
+                                        <td><?php echo $this->escapeHtml($row->username); ?></td>
+                                        <td><?php echo $this->escapeHtml($row->email); ?></td>
+                                        <td><?php echo $this->escapeHtml($row->password); ?></td>
+                                        <td><?php echo $this->escapeHtml($row->salt); ?></td>
+                                        <td><?php echo $this->escapeHtml($row->email_check_code); ?></td>
+                                        <td><?php echo $this->escapeHtml($row->is_disabled); ?></td>
+                                        <td><?php echo $this->escapeHtml($row->created); ?></td>
+                                        <td><?php echo $this->escapeHtml($row->modified); ?></td>
+
+                                        <td>
+                                            <a href="<?php echo $this->url('users/edit', array('id' => $row->id)); ?>" class="btn btn-primary btn-xs edit-row"><i class="glyphicon glyphicon-pencil"></i></a>
+                                            <?php
+                                            $delurl = $this->url('users/delete', array(
+                                                'id' => $row->id,
+                                            ));
+                                            ?>
+                                            <div style="display: none;">
+                                                <form action="<?php echo $delurl; ?>" method="post" id="post_<?php echo $row->id; ?>" name="post_<?php echo $row->id; ?>">
+                                                    <input type="hidden" name="id" value="<?php echo (int) $row->id; ?>" />
+                                                </form>
+                                            </div>
+                                            <a onclick="if (confirm('Are you sure you want to delete <?php echo $row->id; ?>?')) {
+                                                            document.<?php echo "post_" . $row->id; ?>.submit();
+                                                        }
+                                                        event.returnValue = false;
+                                                        return false;" href="#" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-remove"></i></a>
+
+                                        </td>
+
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                        <?php echo $this->partial('partial/table_total_count.phtml', array('totalRecord' => $totalRecord, 'currentPage' => $currentPage, 'totalPage' => $totalPage)); ?>
+
+                        <?php
+                        echo $this->paginationControl(
+                                $paginator, 'Sliding', 'paginator-slide', array('order_by' => $order_by, 'order' => $order, 'search_by' => $search_by, 'pageAction' => $pageAction, 'item_per_page' => $item_per_page)
+                        );
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-24">
+
+
+            <div class="panel-group" id="accordion">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"> Filter Users</a></h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="col-md-6">
+                                <?php
+                                $form = $this->form;
+                                $form->setAttribute('action', $this->url('users/search'));
+                                $form->prepare();
+                                echo $this->form()->openTag($form);
+                                ?>
+                                <input type="hidden"
+                                       name="item_per_page" value="<?php echo $item_per_page; ?>">
+                                       <?php
+                                       foreach ($form as $element) :
+                                           ?>
+                                    <div
+                                        class="form-group <?php if ($this->formElementErrors($element)) echo "error" ?>">
+                                        <label class="col-lg-8 control-label"><?php echo $element->getLabel() ?></label>
+                                        <div class="col-lg-16 controls">
+                                            <?php
+                                            echo $this->formElement($element);
+                                            if ($this->formElementErrors($element)) :
+                                                ?>
+                                                <span
+                                                    class="help-inline"><?php echo $this->formElementErrors($element); ?></span>
+
+                                                <?php
+                                            endif;
+                                            ?>
+                                        </div>
+                                    </div>
+                                    <?php
+                                endforeach
+                                ;
+                                echo $this->form()->closeTag();
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>

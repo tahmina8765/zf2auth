@@ -1,0 +1,26 @@
+<?php
+
+return array(
+    "success" => "Success!",
+    "error" => "Failure!",
+    "alreadyUsed" => "Information already used.",
+    "invalidUsername" => "Invalid login credential.",
+    "invalidLogin" => "Invalid login credential.",
+    "invalidEmail" => "Invalid email address.",
+    "emptyUsername" => "Email is empty.",
+    "userNotExist" => "Username and password combination incorrect.",
+    "emailNotExist" => "Username and password combination incorrect.",
+    "userExist" => "Username already used.",
+    "passwordNotMatch" => "Username/Email and password combination incorrect.",
+    "logout" => "You\'ve been logged out.",
+    "resetPassword" => "Please check your inbox for further instructions.",
+    "changePassword" => "Your password has changed successfully.",
+    "smallPassword" => "Password is too short. Password length should be minimum 6 characters.",
+    "validMessage" => "Please fill in the required fields.",
+    "unauthorizedUser" => "Username and password combination incorrect.",
+    "unauthorizedPassword" => "Username and password combination incorrect.",
+    "insert" => "Information inserted successfully.",
+    "update" => "Information updated successfully.",
+    "delete" => "Information deleted successfully.",
+    "unauthorized" => "You are not authorized to perform this action.",
+);

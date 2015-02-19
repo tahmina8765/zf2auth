@@ -1,0 +1,19 @@
+<?php
+
+if (isset($flashMessages) && count($flashMessages) > 0) {
+    foreach ($flashMessages as $message) {
+        if (isset($message['error']))
+            echo '<div class="alert alert-danger">' . $message['error'] . '</div>';
+        elseif (isset($message['success']))
+            echo '<div class="alert alert-success">' . $message['success'] . '</div>';;
+    }
+}
+
+if (isset($error) && count($error) > 0) {
+    foreach ($error as $message) {
+        if (isset($message['error']))
+            echo '<div class="alert alert-danger">' . $message['error'] . '</div>';
+        elseif (isset($message['success']))
+            echo '<div class="alert alert-success">' . $message['success'] . '</div>';;
+    }
+}
