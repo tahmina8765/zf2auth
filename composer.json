@@ -7,5 +7,13 @@
             "email": "tahmina8765@yahoo.com"
         }
     ],
-    "require": {}
+    "require": {},
+    "autoload": {
+        "psr-0": {
+            "Zf2auth": "./"
+        },
+        "classmap": [
+            "./Module.php"
+        ]
+    }
 }
