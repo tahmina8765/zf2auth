@@ -1,0 +1,11 @@
+{
+    "name": "tahmina8765/zf2auth",
+    "description": "A Zend Framework 2 authentication module",
+    "authors": [
+        {
+            "name": "Tahmina Khatoon",
+            "email": "tahmina8765@yahoo.com"
+        }
+    ],
+    "require": {}
+}
