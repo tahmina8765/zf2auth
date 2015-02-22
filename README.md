@@ -43,6 +43,7 @@ Installation
 
 3. Add the following in Application/Module.php (the main module which use to bootstrap the application)
 
+    ```php
     use Zend\Authentication\AuthenticationService;
     use Application\Table\AppTable;
     use Zend\Http\Response;
@@ -133,14 +134,8 @@ Installation
         $userRole = $Zf2AuthStorage->getRole();
 
         if (!$e->getViewModel()->acl->hasResource($route) || !$e->getViewModel()->acl->isAllowed($userRole, $route)) {
-//            echo $route;
-//            die();
-            $response = $e->getResponse();
-//            location to page or what ever
-//            $response->getHeaders()->addHeaderLine('Location', $e->getRequest()->getBaseUrl() . '/403');
-//            $response->setStatusCode(303);
-//            exit;
 
+            $response = $e->getResponse();
 
             if (!empty($_SESSION['zf2authSession'])) {
 
@@ -172,18 +167,7 @@ Installation
 
     public function handleError(MvcEvent $e)
     {
-//        echo "here";
-//        die();
-        //get the exception
-//        echo "<pre>";
-//        print_r($e->getName());
-//        print_r($e->getParams());
-//        echo "</pre>";
-//        die();
         $exception = $e->getParam('exception');
-
-        //...handle the exception... maybe log it and redirect to another page,
-        //or send an email that an exception occurred...
     }
 
     public function getServiceConfig()
@@ -208,6 +192,6 @@ Installation
     public function getSessionConfig()
     {
         $config = array();
-//        $config = include __DIR__ . '/../../config/session.config.php';
         return $config;
     }
+    ```
