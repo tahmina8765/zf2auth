@@ -1,0 +1,16 @@
+<?php
+
+if (isset($flashMessages) && count($flashMessages) > 0) {
+    foreach ($flashMessages as $message) {
+        if (isset($message['error']))
+            echo '<div class="alert alert-block alert-danger fade in">'
+            . '<button type="button" class="close close-sm" data-dismiss="alert">
+                                    <i class="fa fa-times"></i>
+                                </button><p>' . $message['error'] . '</p></div>';
+        elseif (isset($message['success']))
+            echo '<div class="alert alert-success alert-block fade in">'
+            . '<button type="button" class="close close-sm" data-dismiss="alert">
+                                    <i class="fa fa-times"></i>
+                                </button><p>' . $message['success'] . '</p></div>';
+    }
+}
