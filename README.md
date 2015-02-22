@@ -45,7 +45,6 @@ Installation
 
     ```php
     use Zend\Authentication\AuthenticationService;
-    use Application\Table\AppTable;
     use Zend\Http\Response;
     use Zend\Session\Container;
     use Zend\Session\Config\SessionConfig;
@@ -178,13 +177,7 @@ Installation
                     $authService = new AuthenticationService();
                     $authService->setStorage($sm->get('Zf2auth\Model\Zf2AuthStorage'));
                     return $authService;
-                },
-                'Application\Table\AppTable' => function($sm) {
-                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    $dbAdapter2 = $sm->get('db2');
-                    $table = new CustomersTable($dbAdapter, $dbAdapter2);
-                    return $table;
-                },
+                },                
             ),
         );
     }
