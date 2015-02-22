@@ -19,6 +19,10 @@ $displayRange_array = array(
 );
 
 $fullspan = count($roles) + 2;
+
+if(empty(ADMIN_ROLE_ID)){
+    define(ADMIN_ROLE_ID, 1);
+}
 /*
   ?>
   <h1>All Node</h1>
