@@ -8,6 +8,7 @@
         }
     ],
     "minimum-stability": "dev",
+    "prefer-stable": true,
     "require": {
         "php": ">=5.3.3",
         "tahmina8765/zf2mail": "v0.0.1-alpha"
