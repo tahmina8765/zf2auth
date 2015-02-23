@@ -38,6 +38,9 @@ class UtilHelper extends AbstractHelper
 
     public function displayLink($link)
     {
+        if('Administrator' == $this->role){
+            return true;
+        }
         $return = false;
         $container = new Container('system_init');
         $resources = $container->allowed_resources;

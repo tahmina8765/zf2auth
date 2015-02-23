@@ -188,3 +188,7 @@ Installation
         return $config;
     }
     ```
+
+4. Set Admin role in piblic/index.php
+
+    define('ADMIN_ROLE_ID', 1);
