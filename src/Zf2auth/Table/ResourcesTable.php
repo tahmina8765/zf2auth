@@ -126,6 +126,7 @@ class ResourcesTable extends AbstractTableGateway
             'users/login',
             'users/authenticate',
             'users/forgot-password',
+            'users/reset-password',
         );
         $adapter = $this->adapter;
         $select = new Select();

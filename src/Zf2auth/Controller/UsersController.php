@@ -587,13 +587,9 @@ class UsersController extends Zf2authAppController
             $form->setValidationGroup('id', 'password_access_tocken', 'access_token_valid_till');
             if ($form->isValid()) {
                 if ($valid) {
-                    $profileObj = $this->getProfilesTable()->getUserPrfile($formData['id']);
-                    foreach ($profileObj as $data) {
-                        $profiledata = $data;
-                    }
 
                     $body = "
-Hi " . trim($profiledata->first_name) . ",<br><br>
+Hi " . trim($usersobj->name) . ",<br><br>
 
 Please click here to create a new password:<br><br>
 <a href='" . $retriveurl . "'>" . $retriveurl . "</a><br><br>
@@ -708,19 +704,14 @@ Thanks!";
                 $form->setValidationGroup('id', 'password');
 
                 if ($form->isValid()) {
-
                     if ($valid) {
-                        $profileObj = $this->getProfilesTable()->getUserPrfile($formData['id']);
-                        foreach ($profileObj as $data) {
-                            $profiledata = $data;
-                        }
                         $body = "
-Hi " . trim($profiledata->first_name) . ",<br><br>Your password has been changed. <br /><br>
+Hi " . trim($usersobj->name) . ",<br><br>Your password has been changed. <br /><br>
 
 Go here: <a href='" . $emailer->siteURL() . "'>" . $emailer->siteURL() . "</a><br />
 
 
-If you have any questions, please do not hesitate to contact us at <a href=\"mailto:support@oskall.com\">support@oskall.com</a>.";
+If you have any questions, please do not hesitate to contact us at <a href=\"mailto:support@yourdomain.com\">support@yourdomain.com</a>.";
 
                         $mailData = array(
                             'to' => $usersobj->email,
@@ -813,16 +804,12 @@ If you have any questions, please do not hesitate to contact us at <a href=\"mai
             $form->setValidationGroup('id', 'password');
 
             if ($form->isValid()) {
-                $profileObj = $this->getProfilesTable()->getUserPrfile($formData['id']);
-                foreach ($profileObj as $data) {
-                    $profiledata = $data;
-                }
                 if ($valid) {
-                    $body = "Hi " . trim($profiledata->first_name) . ",<br><br>Your password has been changed. <br /><br>
+                    $body = "Hi " . trim($usersobj->name) . ",<br><br>Your password has been changed. <br /><br>
 
 Go here: <a href='" . $emailer->siteURL() . "'>" . $emailer->siteURL() . "</a><br />
 
-If you have any questions, please do not hesitate to contact us at <a href=\"mailto:support@oskall.com\">support@oskall.com</a>.";
+If you have any questions, please do not hesitate to contact us at <a href=\"mailto:support@yourdomain.com\">support@yourdomain.com</a>.";
 
                     $mailData = array(
                         'to' => $usersobj->email,
